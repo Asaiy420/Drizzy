@@ -13,7 +13,7 @@ export const files = pgTable("files", {
   fileUrl: text("file_url").notNull(),
   thumbnailUrl: text("thumbnail_url"),
 
-  //Ownsership
+  //Ownership
 
   userId: text("user_id").notNull(),
   parentId: uuid("parent_id"), // Parent folder id (if any and null for root items)
@@ -28,6 +28,15 @@ export const files = pgTable("files", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(), 
 });
 
+/* 
+
+ =======ONE TO MANY RELATIONSHIP======
+
+parent: Each file/folder can have one parent folder i.e root folder
+child: Each folder can have many child folders/files
+
+*/
+
 export const fileRelations = relations(files, ({one, many}) => ({
     parent: one(files, {
         fields: [files.parentId],
@@ -35,4 +44,10 @@ export const fileRelations = relations(files, ({one, many}) => ({
     }),
     // relatiionship to child file/folder
     children: many(files)
-})) 
+}))
+
+
+// Type definition
+
+export const Files = typeof files.$inferSelect;
+export const newFile = typeof files.$inferInsert;
