@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { signUpSchema } from "@/schemas/signUpSchema";
 
-export default function SignUpForm() {
+export default function SignUpForm() {  
   const router = useRouter();
   const { signUp, isLoaded, setActive } = useSignUp();
   const [isSubmitting, setIsSubmitting] = useState(false);
